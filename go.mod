@@ -1,1 +1,1 @@
-module proto_avito_test_task
+module github.com/fishmanDK/proto_avito_test_task
