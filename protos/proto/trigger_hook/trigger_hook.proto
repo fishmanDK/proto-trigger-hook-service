@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package trigger_hook;
+
+option go_package = "fishmanDK.trigger_hook.v1;trigger_hook_v1";
+
+service TriggerHookManager{
+  rpc ScheduleFullDeletion(CreateFullDeletionRequest) returns (NewDeletionResponse);
+  rpc SchedulePartialDeletion(CreatePartialDeletionRequest) returns (NewDeletionResponse);
+}
+
+message CreateFullDeletionRequest{
+  int64 bannerID = 1;
+}
+
+message CreatePartialDeletionRequest{
+  int64 tagID = 1;
+  int64 featureID = 2;
+}
+
+message NewDeletionResponse{
+  bool ok = 1;
+  string message = 2;
+}
