@@ -4,7 +4,7 @@
 // - protoc             v4.25.0
 // source: trigger_hook/trigger_hook.proto
 
-package trigger_hook_v1
+package trg_hk
 
 import (
 	context "context"
