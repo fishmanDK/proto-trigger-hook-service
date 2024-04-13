@@ -6,7 +6,7 @@ option go_package = "fishmanDK.trigger_hook.v1;trigger_hook_v1";
 
 service TriggerHookManager{
   rpc ScheduleFullDeletion(CreateFullDeletionRequest) returns (NewDeletionResponse);
-  rpc SchedulePartialDeletion(CreatePartialDeletionRequest) returns (NewDeletionResponse);
+    rpc SchedulePartialDeletion(CreatePartialDeletionRequest) returns (NewDeletionResponse);
 }
 
 message CreateFullDeletionRequest{
@@ -19,6 +19,5 @@ message CreatePartialDeletionRequest{
 }
 
 message NewDeletionResponse{
-  bool ok = 1;
-  string message = 2;
+  bool success = 1;
 }
