@@ -19,16 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	TriggerHookManager_ScheduleFullDeletion_FullMethodName    = "/trigger_hook.TriggerHookManager/ScheduleFullDeletion"
-	TriggerHookManager_SchedulePartialDeletion_FullMethodName = "/trigger_hook.TriggerHookManager/SchedulePartialDeletion"
+	TriggerHookManager_ScheduleDeletion_FullMethodName = "/trigger_hook.TriggerHookManager/ScheduleDeletion"
 )
 
 // TriggerHookManagerClient is the client API for TriggerHookManager service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TriggerHookManagerClient interface {
-	ScheduleFullDeletion(ctx context.Context, in *CreateFullDeletionRequest, opts ...grpc.CallOption) (*NewDeletionResponse, error)
-	SchedulePartialDeletion(ctx context.Context, in *CreatePartialDeletionRequest, opts ...grpc.CallOption) (*NewDeletionResponse, error)
+	ScheduleDeletion(ctx context.Context, in *CreateDeletionRequest, opts ...grpc.CallOption) (*NewDeletionResponse, error)
 }
 
 type triggerHookManagerClient struct {
@@ -39,18 +37,9 @@ func NewTriggerHookManagerClient(cc grpc.ClientConnInterface) TriggerHookManager
 	return &triggerHookManagerClient{cc}
 }
 
-func (c *triggerHookManagerClient) ScheduleFullDeletion(ctx context.Context, in *CreateFullDeletionRequest, opts ...grpc.CallOption) (*NewDeletionResponse, error) {
+func (c *triggerHookManagerClient) ScheduleDeletion(ctx context.Context, in *CreateDeletionRequest, opts ...grpc.CallOption) (*NewDeletionResponse, error) {
 	out := new(NewDeletionResponse)
-	err := c.cc.Invoke(ctx, TriggerHookManager_ScheduleFullDeletion_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *triggerHookManagerClient) SchedulePartialDeletion(ctx context.Context, in *CreatePartialDeletionRequest, opts ...grpc.CallOption) (*NewDeletionResponse, error) {
-	out := new(NewDeletionResponse)
-	err := c.cc.Invoke(ctx, TriggerHookManager_SchedulePartialDeletion_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, TriggerHookManager_ScheduleDeletion_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -61,8 +50,7 @@ func (c *triggerHookManagerClient) SchedulePartialDeletion(ctx context.Context, 
 // All implementations must embed UnimplementedTriggerHookManagerServer
 // for forward compatibility
 type TriggerHookManagerServer interface {
-	ScheduleFullDeletion(context.Context, *CreateFullDeletionRequest) (*NewDeletionResponse, error)
-	SchedulePartialDeletion(context.Context, *CreatePartialDeletionRequest) (*NewDeletionResponse, error)
+	ScheduleDeletion(context.Context, *CreateDeletionRequest) (*NewDeletionResponse, error)
 	mustEmbedUnimplementedTriggerHookManagerServer()
 }
 
@@ -70,11 +58,8 @@ type TriggerHookManagerServer interface {
 type UnimplementedTriggerHookManagerServer struct {
 }
 
-func (UnimplementedTriggerHookManagerServer) ScheduleFullDeletion(context.Context, *CreateFullDeletionRequest) (*NewDeletionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ScheduleFullDeletion not implemented")
-}
-func (UnimplementedTriggerHookManagerServer) SchedulePartialDeletion(context.Context, *CreatePartialDeletionRequest) (*NewDeletionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SchedulePartialDeletion not implemented")
+func (UnimplementedTriggerHookManagerServer) ScheduleDeletion(context.Context, *CreateDeletionRequest) (*NewDeletionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ScheduleDeletion not implemented")
 }
 func (UnimplementedTriggerHookManagerServer) mustEmbedUnimplementedTriggerHookManagerServer() {}
 
@@ -89,38 +74,20 @@ func RegisterTriggerHookManagerServer(s grpc.ServiceRegistrar, srv TriggerHookMa
 	s.RegisterService(&TriggerHookManager_ServiceDesc, srv)
 }
 
-func _TriggerHookManager_ScheduleFullDeletion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateFullDeletionRequest)
+func _TriggerHookManager_ScheduleDeletion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDeletionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TriggerHookManagerServer).ScheduleFullDeletion(ctx, in)
+		return srv.(TriggerHookManagerServer).ScheduleDeletion(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TriggerHookManager_ScheduleFullDeletion_FullMethodName,
+		FullMethod: TriggerHookManager_ScheduleDeletion_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TriggerHookManagerServer).ScheduleFullDeletion(ctx, req.(*CreateFullDeletionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TriggerHookManager_SchedulePartialDeletion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatePartialDeletionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TriggerHookManagerServer).SchedulePartialDeletion(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TriggerHookManager_SchedulePartialDeletion_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TriggerHookManagerServer).SchedulePartialDeletion(ctx, req.(*CreatePartialDeletionRequest))
+		return srv.(TriggerHookManagerServer).ScheduleDeletion(ctx, req.(*CreateDeletionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -133,12 +100,8 @@ var TriggerHookManager_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*TriggerHookManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ScheduleFullDeletion",
-			Handler:    _TriggerHookManager_ScheduleFullDeletion_Handler,
-		},
-		{
-			MethodName: "SchedulePartialDeletion",
-			Handler:    _TriggerHookManager_SchedulePartialDeletion_Handler,
+			MethodName: "ScheduleDeletion",
+			Handler:    _TriggerHookManager_ScheduleDeletion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

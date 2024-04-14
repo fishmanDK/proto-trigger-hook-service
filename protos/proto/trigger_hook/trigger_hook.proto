@@ -5,17 +5,13 @@ package trigger_hook;
 option go_package = "fishmanDK.trigger_hook.v1;trg_hk";
 
 service TriggerHookManager{
-  rpc ScheduleFullDeletion(CreateFullDeletionRequest) returns (NewDeletionResponse);
-  rpc SchedulePartialDeletion(CreatePartialDeletionRequest) returns (NewDeletionResponse);
+  rpc ScheduleDeletion(CreateDeletionRequest) returns (NewDeletionResponse);
 }
 
-message CreateFullDeletionRequest{
+message CreateDeletionRequest{
   int64 bannerID = 1;
-}
-
-message CreatePartialDeletionRequest{
-  int64 tagID = 1;
-  int64 featureID = 2;
+  int64 tagID = 2;
+  int64 featureID = 3;
 }
 
 message NewDeletionResponse{
